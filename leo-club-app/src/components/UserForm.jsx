@@ -4,7 +4,14 @@ import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
-const DEPARTMENTS = ["Frontend", "Backend", "Full Stack", "QA", "Marketing"];
+const DEPARTMENTS = [
+  "Frontend",
+  "Backend",
+  "Full Stack",
+  "QA",
+  "Machine Learning",
+  "Marketing",
+];
 
 const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
   const [form] = Form.useForm();
