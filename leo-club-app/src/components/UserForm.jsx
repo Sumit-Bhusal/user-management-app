@@ -13,7 +13,13 @@ const DEPARTMENTS = [
   "Marketing",
 ];
 
-const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
+const UserForm = ({
+  initialValues,
+  onFinish,
+  isEdit = false,
+  disabled = false,
+  showButtons = true,
+}) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -26,16 +32,17 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
     <Form
       form={form}
       initialValues={initialValues}
-      onFinish={handleSubmit}
+      onFinish={!disabled ? handleSubmit : undefined}
       layout="vertical"
       className="max-w-2xl mx-auto"
+      disabled={disabled}
     >
       <Form.Item
         label="First Name"
         name="firstName"
         rules={[{ required: true, message: "Please input first name!" }]}
       >
-        <Input />
+        <Input disabled={disabled} />
       </Form.Item>
 
       <Form.Item
@@ -43,7 +50,7 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
         name="lastName"
         rules={[{ required: true, message: "Please input last name!" }]}
       >
-        <Input />
+        <Input disabled={disabled} />
       </Form.Item>
 
       <Form.Item
@@ -51,7 +58,7 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
         name="userName"
         rules={[{ required: true, message: "Please input user name!" }]}
       >
-        <Input />
+        <Input disabled={disabled} />
       </Form.Item>
 
       <Form.Item
@@ -59,7 +66,7 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
         name="userType"
         rules={[{ required: true, message: "Please select user type!" }]}
       >
-        <Select>
+        <Select disabled={disabled}>
           <Option value="Admin User">Admin User</Option>
           <Option value="System User">System User</Option>
         </Select>
@@ -70,7 +77,7 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
         name="department"
         rules={[{ required: true, message: "Please select department!" }]}
       >
-        <Select>
+        <Select disabled={disabled}>
           {DEPARTMENTS.map((dept) => (
             <Option key={dept} value={dept}>
               {dept}
@@ -79,12 +86,14 @@ const UserForm = ({ initialValues, onFinish, isEdit = false }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="mr-4">
-          {isEdit ? "Update" : "Create"}
-        </Button>
-        <Button onClick={() => navigate("/")}>Cancel</Button>
-      </Form.Item>
+      {showButtons && !disabled && (
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="mr-4">
+            {isEdit ? "Update" : "Create"}
+          </Button>
+          <Button onClick={() => navigate("/")}>Cancel</Button>
+        </Form.Item>
+      )}
     </Form>
   );
 };
