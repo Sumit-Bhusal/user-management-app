@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, Button } from "antd";
+import { Card, Button, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import UserForm from "../components/UserForm";
 
@@ -19,15 +19,23 @@ const UserDetail = () => {
   }
 
   return (
-    <Card
-      title="User Details"
-      extra={
-        <Link to="/">
-          <Button type="primary">Back to List</Button>
-        </Link>
-      }
-    >
-      <UserForm initialValues={user} onFinish={() => {}} disabled />
+    <Card title="User Details">
+      {/* Read-only form without buttons */}
+      <UserForm
+        initialValues={user}
+        disabled={true}
+        onFinish={() => {}}
+        showButtons={false} // This will hide form buttons
+      />
+
+      {/* Back button positioned at bottom center */}
+      <Row justify="center" style={{ marginTop: 24 }}>
+        <Col>
+          <Link to="/">
+            <Button type="primary">Back to List</Button>
+          </Link>
+        </Col>
+      </Row>
     </Card>
   );
 };
